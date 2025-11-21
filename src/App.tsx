@@ -40,10 +40,11 @@ function App() {
         <p className='text-lg mt-2 font-light'>Stuff your plate, watch it tumble</p>
       </div>
 
-      <div className="absolute bottom-20 left-0 right-0 z-90 font-light w-full text-center px-4">
+
+      <div className="absolute bottom-5 left-0 right-0 z-90 font-light w-full text-center px-4 max-h-[40vh] overflow-y-auto">
         <p className="text-lg mb-3">In my plate I have:</p>
 
-        <div className="flex flex-wrap justify-center gap-2 mb-4">
+        <div className="flex flex-wrap justify-center gap-2 mb-4 text-xs">
 
           {selectedMeals.length === 0 ? (
             <p className="text-sm mb-3">Nothing..</p>
@@ -54,7 +55,7 @@ function App() {
               className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white border border-white/30 hover:bg-white/30 transition cursor-pointer"
             >
               {meal.title}
-              <span className="text-md font-light">×</span>
+              <span className="text-xm font-light">×</span>
             </button>
           ))}
         </div>
@@ -90,7 +91,7 @@ function App() {
           >+</button>
         </div>
 
-        <div className="flex flex-wrap gap-3 justify-center text-sm">
+        <div className="flex flex-wrap gap-3 justify-center text-xs">
           {mealTemplates.map(({ meal }: any) => (
             <button
               key={meal.objName}
@@ -98,7 +99,7 @@ function App() {
               className="px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
             >
               {meal.title}
-              <span className="text-md font-light">+</span>
+              <span className="text-sm font-light">+</span>
             </button>
           ))}
         </div>

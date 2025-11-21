@@ -7,6 +7,7 @@ import { Debug } from '@react-three/cannon'
 import Meal from './meal'
 import NutritionPanel from './nutritionPanel'
 import { mealTemplates, type TMeal, type TMealTemplate } from '../config/template'
+import CameraController from './cameraController'
 
 interface ObjectCanvasProps {
     debug?: boolean
@@ -14,23 +15,18 @@ interface ObjectCanvasProps {
 }
 
 function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
-    const baseFov = 90
-    const extraFov = Math.floor(meals.length / 5) * 10
-    const currentFov = baseFov + extraFov
-
     return (
         <Canvas
             shadows
             camera={{
                 position: [-6, 10, 10],
-                fov: currentFov
+                fov: 90
             }}
             // gl={{ antialias: true }}
             linear
             flat
-
-
         >
+            <CameraController meals={meals} />
             {/* <fog attach="fog" args={['#fff', 5, 40]} /> */}
             {/* <color attach="background" args={['#f0f0f0']} /> */}
             <ambientLight intensity={0.5 * Math.PI} />
@@ -98,3 +94,4 @@ function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
 }
 
 export default ObjectCanvas
+
