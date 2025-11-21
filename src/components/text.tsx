@@ -22,7 +22,7 @@ function Text(props: TextProps) {
             bevelSegments={3}
         >
             {props.txt}
-            <meshStandardMaterial color={props.color || 'lightgreen'} />
+            <meshStandardMaterial color={props.color || '#FFCE94'} />
         </Text3D>
     )
 }

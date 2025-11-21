@@ -13,14 +13,16 @@ function NutritionPanel({ meals = [] }: NutritionPanelProps) {
     const totalCarbs = meals.reduce((sum, meal) => sum + (meal.carbohydrate || 0), 0)
 
     return (
-        <mesh castShadow position={[0, 5, -6]} rotation={[0, 0, 0]} scale={[2, 2, 1]}>
-
-            <Center top>
-                <Text txt="Nutritional Contents" size={0.4} position={[0, 0, 0]} color='lightblue' />
-                <Text txt={`${Math.round(totalCalories)} KCal`} size={0.3} position={[0, -0.5, 0]} />
-                <Text txt={`${Math.round(totalFat)} Fat`} size={0.3} position={[0, -1, 0]} />
-                <Text txt={`${Math.round(totalProtein)} Protein`} size={0.3} position={[0, -1.5, 0]} />
-                <Text txt={`${Math.round(totalCarbs)} Carbs`} size={0.3} position={[0, -2, 0]} />
+        <mesh castShadow position={[0, 10, -9]} rotation={[0, 0, 0]} scale={[2, 2, 1]}>
+            <RoundedBox args={[7, 4, 0.2]} radius={0.2} smoothness={4}>
+                <meshStandardMaterial color="#ffffff" opacity={0.4} transparent={true} />
+            </RoundedBox>
+            <Center>
+                <Text txt="Nutritional Contents" size={0.4} position={[0, -1, 0]} color='#FFCE94' />
+                <Text txt={`${Math.round(totalCalories)} KCal`} size={0.3} position={[0, -1.5, 0]} />
+                <Text txt={`${Math.round(totalFat)} Fat`} size={0.3} position={[0, -2, 0]} />
+                <Text txt={`${Math.round(totalProtein)} Protein`} size={0.3} position={[0, -2.5, 0]} />
+                <Text txt={`${Math.round(totalCarbs)} Carbs`} size={0.3} position={[0, -3, 0]} />
             </Center>
 
         </mesh>

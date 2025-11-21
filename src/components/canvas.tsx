@@ -82,7 +82,7 @@ function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
             <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr" />
             <OrbitControls
                 makeDefault
-                target={[0, 5, 0]}   // raise the focus point
+                target={[0, 7, 0]}   // raise the focus point
                 autoRotate
                 autoRotateSpeed={0.05}
                 minPolarAngle={0}
