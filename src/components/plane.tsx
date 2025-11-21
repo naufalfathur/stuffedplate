@@ -2,7 +2,7 @@ import { useBox, type BoxProps } from '@react-three/cannon'
 
 function Plane(props: BoxProps) {
     const [ref] = useBox(() => ({
-        args: [10, 11, 10], // same as your boxGeometry
+        args: [20, 11, 20], // same as your boxGeometry
         position: [0, 100, 0],
         rotation: props.rotation,
         ...props
@@ -10,7 +10,7 @@ function Plane(props: BoxProps) {
 
     return (
         <mesh ref={ref} receiveShadow>
-            <boxGeometry args={[10, 11, 10]} />
+            <boxGeometry args={[20, 11, 20]} />
             <meshStandardMaterial color="#FFE3BC" />
         </mesh>
     )

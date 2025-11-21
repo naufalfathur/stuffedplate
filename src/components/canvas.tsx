@@ -61,7 +61,7 @@ function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
                 alphaTest={0.7}
                 opacity={1}
                 scale={12}
-                position={[0, 5.0135, 0]}>
+                position={[0, 5.0120, 0]}>
                 <RandomizedLight amount={8} radius={10} ambient={0.5} position={[5, 5, -10]} bias={0.001} />
             </AccumulativeShadows>
             <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { Mesh } from 'three'
 import { useBox, type BoxProps } from '@react-three/cannon'
@@ -13,7 +13,8 @@ function Meal({ animType = "Dynamic", name, position, rotation, ...rest }: MealP
     const config = (MEAL_CONFIG as any)[name] ?? {}
     const modelPath = `/models/meal/${name}.glb`
 
-    const { scene } = useGLTF(modelPath)
+    const gltf = useGLTF(modelPath)
+    const scene = useMemo(() => gltf.scene.clone(true), [gltf])
 
     const startPosition = (position as any) ?? config.position ?? [0, 15, 0]
     const args = config.args ?? [1, 1, 1]
