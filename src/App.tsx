@@ -4,7 +4,7 @@ import { mealTemplates, type TMeal, foodKeywordMapping } from "./config/template
 
 
 function App() {
-  const API_BASE = import.meta.env.DEV
+  const API_BASE = import.meta.env.VITE_API_BASE || 'https://stuffedplate.pages.dev'
 
   const [selectedMeals, setSelectedMeals] = useState<TMeal[]>([])
   const [searchTerm, setSearchTerm] = useState("")
