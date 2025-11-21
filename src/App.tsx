@@ -26,8 +26,8 @@ function App() {
   bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-70% to-[#FEAD8B]/90"/>
 
       <div className="absolute top-0 z-10 w-full py-20 text-center ">
-        <h1 className='text-6xl font-bold '>Stuffed Plate</h1>
-        <p className='text-sm mt-2 font-light'>A fun physics-based 3D plate stuffing experience</p>
+        <h1 className='text-6xl font-extrabold '>Stuffed Plate</h1>
+        <p className='text-lg font-light'>Stuff your plate, watch it tumble</p>
       </div>
 
       <div className="absolute bottom-20 left-0 right-0 z-90 font-light w-full text-center px-4">

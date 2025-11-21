@@ -10,10 +10,10 @@ import { mealTemplates, type TMeal, type TMealTemplate } from '../config/templat
 
 interface ObjectCanvasProps {
     debug?: boolean
-    meals?: any[]
+    meals?: TMeal[]
 }
 
-function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
+function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
     return (
         <Canvas
             shadows
@@ -26,29 +26,43 @@ function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
 
 
         >
-            {/* <fog attach="fog" args={['#FEAD8B', 0, 30]} /> */}
+            {/* <fog attach="fog" args={['#fff', 5, 40]} /> */}
             {/* <color attach="background" args={['#f0f0f0']} /> */}
             <ambientLight intensity={0.5 * Math.PI} />
             <spotLight decay={0} position={[5, 5, -10]} angle={0.15} penumbra={1} />
             <pointLight decay={0} position={[-10, -10, -10]} />
 
-            <NutritionPanel />
+            <NutritionPanel meals={meals} />
 
 
 
 
             <Physics>
-                <Debug color="red" scale={1.1}>
-                    <Plane position={[0, -0.49, 0]} />
-                    {mealTemplates.map((template: TMealTemplate) => (
-                        <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type='Static' />
-                    ))}
+                {debug ? (
+                    <Debug color="red" scale={1.1}>
+                        <Plane position={[0, -0.49, 0]} />
+                        {mealTemplates.map((template: TMealTemplate) => (
+                            <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type='Static' />
+                        ))}
 
-                    {meals.map((m) => (
-                        <Meal key={m._id} name={m.objName} />
-                    ))}
-                    <Plate position={[0, 8, 0]} />
-                </Debug>
+                        {meals.map((m) => (
+                            <Meal key={m._id} name={m.objName} />
+                        ))}
+                        <Plate position={[0, 8, 0]} />
+                    </Debug>
+                ) :
+                    <>
+                        <Plane position={[0, -0.49, 0]} />
+                        {mealTemplates.map((template: TMealTemplate) => (
+                            <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type='Static' />
+                        ))}
+
+                        {meals.map((m) => (
+                            <Meal key={m._id} name={m.objName} />
+                        ))}
+                        <Plate position={[0, 8, 0]} />
+                    </>
+                }
             </Physics>
 
 

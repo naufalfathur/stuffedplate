@@ -1,39 +1,19 @@
-import { useBox, type BoxProps } from '@react-three/cannon'
+import { useCylinder, type CylinderProps } from '@react-three/cannon'
 
-function Plane(props: BoxProps) {
-    const [ref] = useBox(() => ({
-        args: [20, 11, 20], // same as your boxGeometry
+function Plane(props: CylinderProps) {
+    const [ref] = useCylinder(() => ({
+        args: [10, 10, 11, 32], // radiusTop, radiusBottom, height, segments
         position: [0, 100, 0],
         rotation: props.rotation,
-        ...props
+        ...props,
     }))
 
     return (
         <mesh ref={ref} receiveShadow>
-            <boxGeometry args={[20, 11, 20]} />
+            <cylinderGeometry args={[10, 10, 11, 32]} />
             <meshStandardMaterial color="#FFE3BC" />
         </mesh>
     )
 }
 
 export default Plane
-
-// import { usePlane, type PlaneProps } from '@react-three/cannon'
-
-// function Plane(props: PlaneProps) {
-//     const [ref] = usePlane(() => ({
-//         rotation: [-Math.PI / 2, 0, 0],
-//         ...props
-//     }))
-
-//     return (
-//         <mesh receiveShadow ref={ref}>
-//             <planeGeometry args={[1000, 1000]} />
-
-//             <shadowMaterial opacity={0.5} />
-//             {/* <color args={['red']} /> */}
-//         </mesh>
-//     )
-// }
-
-// export default Plane

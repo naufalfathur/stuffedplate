@@ -1,5 +1,6 @@
 // Define the type for a single meal
 export type TMeal = {
+    _id?: string
     title: string
     objName: string
     calories: number
