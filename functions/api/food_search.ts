@@ -1,11 +1,12 @@
 // /functions/api/food_search.ts
-import crypto from "crypto";
 
 function generateNonce(length = 16) {
-    return crypto.randomBytes(length).toString("hex");
+    const array = new Uint8Array(length);
+    crypto.getRandomValues(array);
+    return Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function generateSignature(params: Record<string, string>, consumerSecret: string, tokenSecret = "") {
+async function generateSignature(params: Record<string, string>, consumerSecret: string, tokenSecret = "") {
     const sorted = Object.keys(params)
         .sort()
         .map((key) => `${key}=${encodeURIComponent(params[key])}`)
@@ -14,7 +15,26 @@ function generateSignature(params: Record<string, string>, consumerSecret: strin
     const baseString = `GET&${encodeURIComponent("https://platform.fatsecret.com/rest/server.api")}&${encodeURIComponent(sorted)}`;
     const signingKey = `${encodeURIComponent(consumerSecret)}&${encodeURIComponent(tokenSecret)}`;
 
-    return crypto.createHmac("sha1", signingKey).update(baseString).digest("base64");
+    const keyData = new TextEncoder().encode(signingKey);
+    const baseStringData = new TextEncoder().encode(baseString);
+
+    const cryptoKey = await crypto.subtle.importKey(
+        "raw",
+        keyData,
+        { name: "HMAC", hash: { name: "SHA-1" } },
+        false,
+        ["sign"]
+    );
+
+    const signatureBuffer = await crypto.subtle.sign("HMAC", cryptoKey, baseStringData);
+    const signatureArray = new Uint8Array(signatureBuffer);
+
+    // Convert to base64
+    let binary = '';
+    for (let i = 0; i < signatureArray.byteLength; i++) {
+        binary += String.fromCharCode(signatureArray[i]);
+    }
+    return btoa(binary);
 }
 
 export async function onRequestGet({ request, env }: any) {
@@ -32,7 +52,7 @@ export async function onRequestGet({ request, env }: any) {
         format: "json",
     };
 
-    oauthParams.oauth_signature = generateSignature(oauthParams, env.FATSECRET_CLIENT_SECRET);
+    oauthParams.oauth_signature = await generateSignature(oauthParams, env.FATSECRET_CLIENT_SECRET);
 
     const apiUrl =
         "https://platform.fatsecret.com/rest/server.api?" +
