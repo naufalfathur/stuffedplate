@@ -14,12 +14,16 @@ interface ObjectCanvasProps {
 }
 
 function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
+    const baseFov = 90
+    const extraFov = Math.floor(meals.length / 5) * 10
+    const currentFov = baseFov + extraFov
+
     return (
         <Canvas
             shadows
             camera={{
                 position: [-6, 10, 10],
-                fov: 90
+                fov: currentFov
             }}
             // gl={{ antialias: true }}
             linear
@@ -68,7 +72,7 @@ function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
 
 
             <AccumulativeShadows
-                temporal  // disable for less jitter
+                temporal
                 frames={100}
                 color="orange"
                 colorBlend={2}
@@ -82,7 +86,7 @@ function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
             <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr" />
             <OrbitControls
                 makeDefault
-                target={[0, 7, 0]}   // raise the focus point
+                target={[0, 7, 0]}
                 autoRotate
                 autoRotateSpeed={0.05}
                 minPolarAngle={0}

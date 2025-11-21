@@ -18,6 +18,10 @@ function App() {
     ])
   }
 
+  function removeMeal(id: string) {
+    setSelectedMeals(prev => prev.filter(meal => meal._id !== id))
+  }
+
   const filteredMeals = mealTemplates
     .map(({ meal }: any) => meal.title)
     .filter(title => title.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -37,6 +41,24 @@ function App() {
       </div>
 
       <div className="absolute bottom-20 left-0 right-0 z-90 font-light w-full text-center px-4">
+        <p className="text-lg mb-3">In my plate I have:</p>
+
+        <div className="flex flex-wrap justify-center gap-2 mb-4">
+
+          {selectedMeals.length === 0 ? (
+            <p className="text-sm mb-3">Nothing..</p>
+          ) : selectedMeals.map(meal => (
+            <button
+              key={meal._id}
+              onClick={() => removeMeal(meal._id)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white border border-white/30 hover:bg-white/30 transition cursor-pointer"
+            >
+              {meal.title}
+              <span className="text-md font-light">×</span>
+            </button>
+          ))}
+        </div>
+
         <p className="text-lg mb-3">Add food to my plate:</p>
 
         <div className="flex flex-row gap-2 w-full justify-center">
@@ -80,6 +102,7 @@ function App() {
             </button>
           ))}
         </div>
+
       </div>
 
 

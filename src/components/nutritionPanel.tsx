@@ -18,11 +18,11 @@ function NutritionPanel({ meals = [] }: NutritionPanelProps) {
                 <meshStandardMaterial color="#ffffff" opacity={0.4} transparent={true} />
             </RoundedBox>
             <Center>
-                <Text txt="Nutritional Contents" size={0.4} position={[0, -1, 0]} color='#FFCE94' />
-                <Text txt={`${Math.round(totalCalories)} KCal`} size={0.3} position={[0, -1.5, 0]} />
-                <Text txt={`${Math.round(totalFat)} Fat`} size={0.3} position={[0, -2, 0]} />
-                <Text txt={`${Math.round(totalProtein)} Protein`} size={0.3} position={[0, -2.5, 0]} />
-                <Text txt={`${Math.round(totalCarbs)} Carbs`} size={0.3} position={[0, -3, 0]} />
+                <Text txt="Nutritional Contents" size={0.4} position={[0, -1, 0]} weight={'Bold'} />
+                <Text txt={`${Math.round(totalCalories)} KCal`} size={0.3} position={[0, -1.5, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalFat)} Fat`} size={0.3} position={[0, -2, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalProtein)} Protein`} size={0.3} position={[0, -2.5, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalCarbs)} Carbs`} size={0.3} position={[0, -3, 0]} weight={'Light_Regular'} />
             </Center>
 
         </mesh>

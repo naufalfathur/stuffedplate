@@ -2,6 +2,7 @@ import { Text3D } from '@react-three/drei'
 
 interface TextProps {
     txt: string
+    weight: string
     size?: number
     color?: string
     position?: [number, number, number]
@@ -10,7 +11,7 @@ interface TextProps {
 function Text(props: TextProps) {
     return (
         <Text3D
-            font="/fonts/Readex Pro_Bold.json"
+            font={`/fonts/Readex_Pro_${props.weight}.json`}
             position={props.position ?? [0, 0, 0]}
             size={props.size || 0.5}
             height={0.3}
@@ -22,7 +23,7 @@ function Text(props: TextProps) {
             bevelSegments={3}
         >
             {props.txt}
-            <meshStandardMaterial color={props.color || '#FFCE94'} />
+            <meshStandardMaterial color={props.color || '#DDD'} />
         </Text3D>
     )
 }
