@@ -28,7 +28,7 @@ export const mealTemplates: TMealTemplate[] = [
     },
     {
         meal: {
-            title: "Chicken Breast 100g",
+            title: "Chicken 100g",
             objName: "chicken",
             calories: 165,
             carbohydrate: 0,
@@ -68,7 +68,7 @@ export const mealTemplates: TMealTemplate[] = [
     },
     {
         meal: {
-            title: "Egg (1pc)",
+            title: "Egg",
             objName: "egg",
             calories: 78,
             carbohydrate: 0.6,
@@ -78,7 +78,7 @@ export const mealTemplates: TMealTemplate[] = [
     },
     {
         meal: {
-            title: "Mixed Vegetables 100g",
+            title: "Greens 100g",
             objName: "vegetable",
             calories: 65,
             carbohydrate: 12,

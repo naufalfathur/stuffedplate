@@ -11,7 +11,7 @@ function Plane(props: CylinderProps) {
     return (
         <mesh ref={ref} receiveShadow>
             <cylinderGeometry args={[10, 10, 11, 32]} />
-            <meshStandardMaterial color="#FFE3BC" />
+            <meshStandardMaterial color="#FEAD8B" />
         </mesh>
     )
 }

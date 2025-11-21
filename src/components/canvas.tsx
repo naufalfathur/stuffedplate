@@ -21,8 +21,9 @@ function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
                 position: [-6, 10, 10],
                 fov: 90
             }}
-            gl={{ antialias: true }}
+            // gl={{ antialias: true }}
             linear
+            flat
 
 
         >

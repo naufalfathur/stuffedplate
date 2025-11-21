@@ -45,7 +45,7 @@ export const MEAL_CONFIG = {
         category: 'protein',
     },
     egg: {
-        scale: 1,
+        scale: 0.6,
         mass: 3,
         args: [2, 0.5, 3],
         category: 'protein',
