@@ -20,9 +20,9 @@ function NutritionPanel({ meals = [] }: NutritionPanelProps) {
             <Center>
                 <Text txt="Nutritional Contents" size={0.4} position={[0, -1, 0]} weight={'Bold'} />
                 <Text txt={`${Math.round(totalCalories)} KCal`} size={0.3} position={[0, -1.5, 0]} weight={'Light_Regular'} />
-                <Text txt={`${Math.round(totalFat)} Fat`} size={0.3} position={[0, -2, 0]} weight={'Light_Regular'} />
-                <Text txt={`${Math.round(totalProtein)} Protein`} size={0.3} position={[0, -2.5, 0]} weight={'Light_Regular'} />
-                <Text txt={`${Math.round(totalCarbs)} Carbs`} size={0.3} position={[0, -3, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalFat)}g Fat`} size={0.3} position={[0, -2, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalProtein)}g Protein`} size={0.3} position={[0, -2.5, 0]} weight={'Light_Regular'} />
+                <Text txt={`${Math.round(totalCarbs)}g Carbs`} size={0.3} position={[0, -3, 0]} weight={'Light_Regular'} />
             </Center>
 
         </mesh>
