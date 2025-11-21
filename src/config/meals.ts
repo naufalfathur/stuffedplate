@@ -28,7 +28,7 @@ export const MEAL_CONFIG = {
     },
     vegetable: {
         scale: 10,
-        mass: 2,
+        mass: 1,
         args: [1.5, 1, 1.5],
         category: 'veg',
     },
@@ -47,7 +47,7 @@ export const MEAL_CONFIG = {
     egg: {
         scale: 0.6,
         mass: 3,
-        args: [2, 0.5, 3],
+        args: [2, 0.15, 3],
         category: 'protein',
     },
     rice: {

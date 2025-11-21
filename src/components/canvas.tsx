@@ -14,7 +14,7 @@ interface ObjectCanvasProps {
     meals?: TMeal[]
 }
 
-function ObjectCanvas({ debug = false, meals = [] }: ObjectCanvasProps) {
+function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
     return (
         <Canvas
             shadows

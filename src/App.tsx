@@ -33,7 +33,7 @@ function App() {
       <ObjectCanvas meals={selectedMeals} />
 
       <div className="absolute inset-0 z-50 pointer-events-none text-center 
-  bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-70% to-[#FEAD8B]/90"/>
+  bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]"/>
 
       <div className="absolute top-0 z-10 w-full py-10 text-center ">
         <img src="/logo.png" alt="Stuffed Plate Logo" className="w-70 h-auto mx-auto" />
