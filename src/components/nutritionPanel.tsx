@@ -1,4 +1,4 @@
-import { Text3D, RoundedBox, Center } from '@react-three/drei'
+import { RoundedBox, Center } from '@react-three/drei'
 import Text from './text'
 import type { TMeal } from '../config/template'
 

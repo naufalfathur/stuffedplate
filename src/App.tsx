@@ -1,12 +1,11 @@
 import { useState } from "react"
 import ObjectCanvas from "./components/canvas"
-import Meal from "./components/meal"
 import { mealTemplates } from "./config/template"
 
 function App() {
   const [selectedMeals, setSelectedMeals] = useState<any[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  // const [suggestions, setSuggestions] = useState<string[]>([])
 
   function addMeal(meal: any) {
     setSelectedMeals(prev => [

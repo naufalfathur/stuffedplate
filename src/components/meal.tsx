@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { Mesh } from 'three'
 import { useBox, type BoxProps } from '@react-three/cannon'
