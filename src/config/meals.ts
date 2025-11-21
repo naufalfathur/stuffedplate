@@ -53,6 +53,8 @@ export const MEAL_CONFIG = {
     rice: {
         scale: 1,
         mass: 1,
+        args: [2, 1.4, 1.3],
+        offset: [0, 0.3, 0],
         category: 'carbs',
     },
     potato: {

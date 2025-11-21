@@ -6,22 +6,23 @@ import { MEAL_CONFIG } from '../config/meals'
 
 interface MealProps extends BoxProps {
     name: string
+    animType?: "Dynamic" | "Static" | "Kinematic" | undefined
 }
 
-function Meal({ name, position, rotation, ...rest }: MealProps) {
+function Meal({ animType = "Dynamic", name, position, rotation, ...rest }: MealProps) {
     const config = (MEAL_CONFIG as any)[name] ?? {}
     const modelPath = `/models/meal/${name}.glb`
 
     const { scene } = useGLTF(modelPath)
 
-    const startPosition = (position as any) ?? config.position ?? [0, 10, 0]
+    const startPosition = (position as any) ?? config.position ?? [0, 15, 0]
     const args = config.args ?? [1, 1, 1]
     const mass = config.mass ?? 1
     const scale = config.scale ?? 1
     const offset = config.offset ?? [0, 0, 0]
     const visualRotation = (rotation as any) ?? config.rotation ?? [0, 0, 0]
 
-    const [ref] = useBox(() => ({ mass, args, position: startPosition, ...rest }))
+    const [ref] = useBox(() => ({ type: animType, mass, args, position: startPosition, ...rest }))
 
     scene.traverse((child: { castShadow: boolean; receiveShadow: boolean }) => {
         if (child instanceof Mesh) {

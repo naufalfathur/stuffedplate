@@ -6,13 +6,14 @@ import Plane from './plane'
 import { Debug } from '@react-three/cannon'
 import Meal from './meal'
 import NutritionPanel from './nutritionPanel'
+import { mealTemplates, type TMeal, type TMealTemplate } from '../config/template'
 
 interface ObjectCanvasProps {
     debug?: boolean
-    children?: React.ReactNode
+    meals?: any[]
 }
 
-function ObjectCanvas({ debug = true, children }: ObjectCanvasProps) {
+function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
     return (
         <Canvas
             shadows
@@ -33,22 +34,21 @@ function ObjectCanvas({ debug = true, children }: ObjectCanvasProps) {
 
             <NutritionPanel />
 
+
+
+
             <Physics>
+                <Debug color="red" scale={1.1}>
+                    <Plane position={[0, -0.49, 0]} />
+                    {mealTemplates.map((template: TMealTemplate) => (
+                        <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type='Static' />
+                    ))}
 
-
-                {debug ? (
-                    <Debug color="red" scale={1.1}>
-                        <Plane position={[0, -0.49, 0]} />
-                        {children}
-                        <Plate position={[0, 8, 0]} />
-                    </Debug>
-                ) : (
-                    <>
-                        <Plane position={[0, -0.49, 0]} />
-                        {children}
-                        <Plate position={[0, 8, 0]} />
-                    </>
-                )}
+                    {meals.map((m) => (
+                        <Meal key={m._id} name={m.objName} />
+                    ))}
+                    <Plate position={[0, 8, 0]} />
+                </Debug>
             </Physics>
 
 
