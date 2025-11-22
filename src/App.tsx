@@ -137,7 +137,7 @@ function App() {
 
 
 
-      <div className="absolute bottom-5 left-0 right-0 z-90 font-light w-full text-center px-2 max-h-[40vh] overflow-y-auto">
+      <div className="absolute flex flex-col justify-end bottom-5 left-0 right-0 z-90 font-light w-full text-center px-2 max-h-[40vh] overflow-y-auto">
         <p className="text-lg mb-3">In my plate I have:</p>
 
         <div className="flex flex-wrap justify-center gap-2 mb-4 text-xs">
@@ -145,7 +145,7 @@ function App() {
             <p className="text-sm mb-3">Nothing..</p>
           ) : (
             <>
-              {selectedMeals.slice(0, 8).map(meal => (
+              {selectedMeals.slice(0, 5).map(meal => (
                 <button
                   key={meal._id}
                   onClick={() => removeMeal(meal._id)}
@@ -156,11 +156,11 @@ function App() {
                 </button>
               ))}
 
-              {selectedMeals.length > 8 && (
+              {selectedMeals.length > 5 && (
                 <div
                   className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white border border-white/30 cursor-default"
                 >
-                  and {selectedMeals.length - 8} more...
+                  and {selectedMeals.length - 5} more...
                 </div>
               )}
             </>
