@@ -1,6 +1,5 @@
 import { Download, Share } from "lucide-react";
 
-// CaptureOverlay.tsx
 interface CaptureOverlayProps {
     capturedImage: string;
     onClose: () => void;
