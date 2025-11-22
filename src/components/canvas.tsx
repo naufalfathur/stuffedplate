@@ -25,6 +25,7 @@ function ObjectCanvas({ debug = import.meta.env.VITE_DEBUG === 'true', meals = [
             // gl={{ antialias: true }}
             linear
             flat
+            gl={{ preserveDrawingBuffer: true }}
         >
             <CameraController meals={meals} />
             {/* <fog attach="fog" args={['#fff', 5, 40]} /> */}
