@@ -3,18 +3,22 @@ import ObjectCanvas from "./components/canvas"
 import { mealTemplates, type TMeal, foodKeywordMapping } from "./config/template"
 import Capture from "./components/capture"
 import { RefreshCcw, ChevronDown } from "lucide-react"
+import CaptureOverlay from "./components/captureOverlay"
+
+
 
 
 function App() {
   const API_BASE = import.meta.env.VITE_API_BASE || 'https://stuffedplate.pages.dev'
 
+  const [captureState, setCaptureState] = useState<0 | 1 | 2>(0)
+  const [capturedImage, setCapturedImage] = useState<string>("")
+
   const [selectedMeals, setSelectedMeals] = useState<TMeal[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [searchResults, setSearchResults] = useState<TMeal[]>([])
-  const [isCapturing, setIsCapturing] = useState(false)
   const [showAllMeals, setShowAllMeals] = useState(false);
 
-  // Reset showAllMeals when selectedMeals changes
   useEffect(() => {
     setShowAllMeals(false)
   }, [selectedMeals])
@@ -25,7 +29,7 @@ function App() {
       ...prev,
       {
         ...meal,
-        _id: crypto.randomUUID(), // unique key for React + physics
+        _id: crypto.randomUUID(),
       },
     ])
   }
@@ -89,9 +93,9 @@ function App() {
     }
   }
 
-  function setCapturetingState(state: boolean) {
-    console.log("Capture state:", state);
-    setIsCapturing(state)
+  function setCapturetingState(state: 0 | 1 | 2) {
+    console.log("Capture state:", state)
+    setCaptureState(state)
   }
 
   return (
@@ -100,10 +104,9 @@ function App() {
 
       <ObjectCanvas meals={selectedMeals} />
 
-      <div className="absolute inset-0 z-50 pointer-events-none text-center 
-  bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]"/>
+      <div className="absolute inset-0 z-50 pointer-events-none text-center bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]" />
 
-      <div className="absolute top-10 w-full z-10 h-[25vh] px-10 flex justify-between ">
+      <div className="header absolute top-8 w-full z-10 h-[25vh] px-5 flex justify-between ">
 
         <div className="w-1/3">
 
@@ -121,11 +124,11 @@ function App() {
         <div className="flex flex-col w-1/3 items-center text-center justify-start">
           <img src="/logo-wtxt.png" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto" />
 
-          {selectedMeals.length > 0 && (
+          {selectedMeals.length > 0 && captureState === 0 && (
             <button
               onClick={() => {
-                (window as any).dataLayer.push({ 'event': 'reset' });
-                setSelectedMeals([])
+                (window as any).dataLayer.push({ event: 'reset' });
+                setSelectedMeals([]);
               }}
               className="mt-4 text-xs px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
             >
@@ -136,7 +139,7 @@ function App() {
         </div>
 
         <div className="w-1/3 justify-end flex">
-          {!isCapturing && <Capture setCapturetingState={setCapturetingState} />}
+          {captureState === 0 && <Capture setCapturetingState={setCapturetingState} onCapture={(img: string) => setCapturedImage(img)} selectedMealLength={selectedMeals.length} />}
         </div>
 
       </div>
@@ -175,7 +178,7 @@ function App() {
           )}
         </div>
 
-        {!isCapturing && (
+        {captureState === 0 && (
           <div className="flex flex-col w-full">
             <p className="text-lg mb-3">Add food to my plate:</p>
 
@@ -225,6 +228,13 @@ function App() {
         )}
 
       </div>
+
+      {captureState === 2 && (
+        <CaptureOverlay
+          capturedImage={capturedImage}
+          onClose={() => setCaptureState(0)}
+        />
+      )}
 
 
 
