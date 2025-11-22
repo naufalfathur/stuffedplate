@@ -14,7 +14,7 @@ interface ObjectCanvasProps {
     meals?: TMeal[]
 }
 
-function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
+function ObjectCanvas({ debug = import.meta.env.VITE_DEBUG === 'true', meals = [] }: ObjectCanvasProps) {
     return (
         <Canvas
             shadows
@@ -94,4 +94,3 @@ function ObjectCanvas({ debug = true, meals = [] }: ObjectCanvasProps) {
 }
 
 export default ObjectCanvas
-
