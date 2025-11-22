@@ -3,7 +3,7 @@ export const MEAL_CONFIG = {
         scale: 0.25,
         mass: 3,
         args: [2.2, 0.3, 2.2],
-        rotation: [5, 20, 10],
+        rotation: [5, 0, 10],
         category: 'carbs',
     },
     bread: {

@@ -7,7 +7,7 @@ import type { TMeal } from '../config/template'
 export default function CameraController({ meals }: { meals: TMeal[] }) {
     const { camera } = useThree()
     const baseFov = 90
-    const targetFov = baseFov + Math.floor(meals.length / 5) * 10
+    const targetFov = Math.min(120, baseFov + Math.floor(meals.length / 5) * 10)
 
     const spring = useSpring({ fov: targetFov, config: { mass: 1, tension: 170, friction: 26 } })
 

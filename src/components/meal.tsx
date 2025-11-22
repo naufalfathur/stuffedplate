@@ -16,7 +16,11 @@ function Meal({ animType = "Dynamic", name, position, rotation, ...rest }: MealP
     const gltf = useGLTF(modelPath)
     const scene = useMemo(() => gltf.scene.clone(true), [gltf])
 
-    const startPosition = (position as any) ?? config.position ?? [0, 15, 0]
+    const startPosition = (position as any) ?? config.position ?? [
+        (Math.random() * 4) - 2,
+        15,
+        (Math.random() * 4) - 2
+    ]
     const args = config.args ?? [1, 1, 1]
     const mass = config.mass ?? 1
     const scale = config.scale ?? 1
