@@ -4,10 +4,6 @@ import { mealTemplates, type TMeal, foodKeywordMapping } from "./config/template
 import Capture from "./components/capture"
 import { RefreshCcw, ChevronDown } from "lucide-react"
 import CaptureOverlay from "./components/captureOverlay"
-
-
-
-
 function App() {
   const API_BASE = import.meta.env.VITE_API_BASE || 'https://stuffedplate.pages.dev'
 
@@ -15,6 +11,7 @@ function App() {
   const [capturedImage, setCapturedImage] = useState<string>("")
 
   const [selectedMeals, setSelectedMeals] = useState<TMeal[]>([])
+  const [showNo3DText, setShowNo3DText] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [searchResults, setSearchResults] = useState<TMeal[]>([])
   const [showAllMeals, setShowAllMeals] = useState(false);
@@ -32,6 +29,10 @@ function App() {
         _id: crypto.randomUUID(),
       },
     ])
+    if (!meal.objName) {
+      setShowNo3DText(true)
+      setTimeout(() => setShowNo3DText(false), 5000)
+    }
   }
 
   function removeMeal(id: string) {
@@ -144,6 +145,16 @@ function App() {
 
       </div>
 
+      {showNo3DText && (
+        <div className="absolute top-80 z-10 w-full text-center">
+          <p className="text-white font-light text-xs opacity-85">
+            Sorry I got no 3D object for this food,<br />
+            I'll put the 3d text instead 🗿<br />
+            The nutrition still works tho
+          </p>
+        </div>
+      )}
+
 
 
       <div className="absolute flex flex-col justify-start bottom-5 left-0 right-0 z-90 font-light w-full text-center px-2 max-h-[40vh] overflow-y-auto">
@@ -203,7 +214,7 @@ function App() {
                           setSearchResults([])
                           setSearchTerm("")
                         }}
-                      >d
+                      >
                         {result.title} / {result.amount}
                       </li>
                     ))}

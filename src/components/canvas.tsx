@@ -44,10 +44,10 @@ function ObjectCanvas({ debug = import.meta.env.VITE_DEBUG === 'true', meals = [
                         <Debug color="red" scale={1.1}>
                             <Plane position={[0, -0.49, 0]} />
                             {mealTemplates.map(template => (
-                                <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type="Static" />
+                                <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type="Static" originalName={template.meal.title} />
                             ))}
                             {meals.map(m => (
-                                <Meal key={m._id} name={m.objName} />
+                                <Meal key={m._id} name={m.objName} originalName={m.title} />
                             ))}
                             <Plate position={[0, 8, 0]} />
                         </Debug>
@@ -55,10 +55,10 @@ function ObjectCanvas({ debug = import.meta.env.VITE_DEBUG === 'true', meals = [
                         <>
                             <Plane position={[0, -0.49, 0]} />
                             {mealTemplates.map(template => (
-                                <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type="Static" />
+                                <Meal key={template.meal.objName} name={template.meal.objName} position={[0, 5000, 0]} type="Static" originalName={template.meal.title} />
                             ))}
                             {meals.map(m => (
-                                <Meal key={m._id} name={m.objName} />
+                                <Meal key={m._id} name={m.objName} originalName={m.title} />
                             ))}
                             <Plate position={[0, 8, 0]} />
                         </>
