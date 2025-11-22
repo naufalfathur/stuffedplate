@@ -8,9 +8,12 @@ interface CaptureProps {
 function Capture({ setCapturetingState }: CaptureProps) {
     return (
         <button
+            id='capture'
             onClick={() => {
+
+                (window as any).dataLayer.push({ 'event': 'capture' });
+
                 setCapturetingState(true);
-                // wait a tick so the DOM can update
                 setTimeout(async () => {
                     console.log("Capturing screenshot...")
                     const canvas = await html2canvas(document.body, {
@@ -19,11 +22,10 @@ function Capture({ setCapturetingState }: CaptureProps) {
                         onclone: (doc) => {
                             doc.querySelectorAll(".rounded-full").forEach((el) => {
                                 const node = el as HTMLElement;
-                                // Remove transparent + blur background (causing the bug)
                                 node.style.background = "rgba(255,255,255,0.2)";
                                 node.style.backdropFilter = "none";
                                 node.style.backdropFilter = "none";
-                                node.style.overflow = "hidden"; // critical for rounded corners to clip
+                                node.style.overflow = "hidden";
                             });
                         }
                     });

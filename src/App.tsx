@@ -2,6 +2,7 @@ import { useState } from "react"
 import ObjectCanvas from "./components/canvas"
 import { mealTemplates, type TMeal, foodKeywordMapping } from "./config/template"
 import Capture from "./components/capture"
+import { RefreshCcw } from "lucide-react"
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [isCapturing, setIsCapturing] = useState(false)
 
   function addMeal(meal: TMeal) {
+    (window as any).dataLayer.push({ 'event': 'Add Meal', 'meal': meal, 'meal_name': meal.title });
     setSelectedMeals(prev => [
       ...prev,
       {
@@ -95,18 +97,36 @@ function App() {
       <div className="absolute inset-0 z-50 pointer-events-none text-center 
   bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]"/>
 
-      <div className="absolute top-10 w-full z-10 h-[20vh] px-10 flex justify-between ">
+      <div className="absolute top-10 w-full z-10 h-[25vh] px-10 flex justify-between ">
 
         <div className="w-1/3">
-          <img
-            src="/nflogo.png"
-            alt="Naufal Fathur Logo"
-            className="w-15 h-15 object-contain"
-          />
+
+          <a href="https://naufalfathur.is-a.dev" target="_blank" rel="noopener noreferrer">
+            <img
+              id="nflogo"
+              src="/nflogo.png"
+              alt="Naufal Fathur Logo"
+              className="w-15 h-15 object-contain"
+            />
+          </a>
+
         </div>
 
-        <div className="flex flex-col w-1/3 justify-center items-center text-center">
-          <img src="/logo-wtxt.png" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto -mt-8" />
+        <div className="flex flex-col w-1/3 items-center text-center justify-start">
+          <img src="/logo-wtxt.png" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto" />
+
+          {selectedMeals.length > 0 && (
+            <button
+              onClick={() => {
+                (window as any).dataLayer.push({ 'event': 'reset' });
+                setSelectedMeals([])
+              }}
+              className="mt-4 text-xs px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
+            >
+              Reset <RefreshCcw size={10} />
+            </button>
+          )}
+
         </div>
 
         <div className="w-1/3 justify-end flex">
