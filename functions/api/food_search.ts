@@ -51,7 +51,9 @@ export async function onRequestGet({ request, env }: any) {
     }
 
     const url = new URL(request.url);
-    const query = url.searchParams.get("query") || "";
+    const query = url.searchParams.get("query");
+    const foodId = url.searchParams.get("id");
+    const isSearch = !!query;
 
     const oauthParams: Record<string, string> = {
         oauth_consumer_key: env.FATSECRET_CLIENT_ID,
@@ -59,10 +61,14 @@ export async function onRequestGet({ request, env }: any) {
         oauth_signature_method: "HMAC-SHA1",
         oauth_timestamp: Math.floor(Date.now() / 1000).toString(),
         oauth_version: "1.0",
-        method: "foods.search",
-        search_expression: query,
         format: "json",
+        method: isSearch ? "foods.search" : "food.get",
     };
+    if (isSearch && query) {
+        oauthParams.search_expression = query;
+    } else if (foodId) {
+        oauthParams.food_id = foodId;
+    }
 
     oauthParams.oauth_signature = await generateSignature(oauthParams, env.FATSECRET_CLIENT_SECRET);
 
