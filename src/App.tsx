@@ -91,11 +91,6 @@ function App() {
     }
   }
 
-  function setCapturetingState(state: 0 | 1 | 2) {
-    console.log("Capture state:", state)
-    setCaptureState(state)
-  }
-
   return (
     <div className=' h-screen w-full relative bg-[linear-gradient(135deg,#FEAD8B,#EA523E)] text-white'>
 
