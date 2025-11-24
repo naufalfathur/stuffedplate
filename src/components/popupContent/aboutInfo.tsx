@@ -70,9 +70,9 @@ const credits = [
 function AboutInfo() {
     return (
         <div className="h-full flex flex-col justify-center">
-            <img src="/logo-wtxt.svg" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto p-10" />
+            <img src="/logo-wtxt.svg" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto p-8" />
 
-            <div className="flex flex-col p-5">
+            <div className="flex flex-col">
                 <p className="text-md mt-2 text-center">Project build by Naufal Fathur,<br />visit<a
                     href={"https://naufalfathur.is-a.dev/"}
                     target="_blank"

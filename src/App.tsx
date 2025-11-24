@@ -107,7 +107,10 @@ function App() {
         </button> */}
 
         <button
-          onClick={() => { setOpenPopup("nutrition") }}
+          onClick={() => {
+            setOpenPopup("nutrition");
+            (window as any).dataLayer.push({ 'event': 'nutritionPopUp' });
+          }}
           className="vertical-writing px-4 py-2 bg-white/0 backdrop-blur-md text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
         >
           <Salad size={20} className="-rotate-90" /> Nutritional Details

@@ -20,7 +20,8 @@ function Header({ selectedMeals, captureState, setSelectedMeals, setCapturetingS
                     <button
                         id='info'
                         onClick={() => {
-                            setOpenPopup("info")
+                            setOpenPopup("info");
+                            (window as any).dataLayer.push({ 'event': 'infoPopUp' });
                         }}
                         className="relative h-10 w-10 flex justify-center items-center gap-2 bg-white/20 backdrop-blur-md rounded-full text-white border border-white/30 hover:bg-white/30 transition cursor-pointer"
                     >
