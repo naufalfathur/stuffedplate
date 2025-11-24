@@ -23,7 +23,6 @@ export default function CaptureOverlay({ capturedImage, onClose }: CaptureOverla
                         <Download />  Save Image
                     </a>
 
-                    {/* Show share button only if mobile and Web Share API with files is supported */}
                     {typeof navigator !== "undefined" &&
                         /Mobi|Android/i.test(navigator.userAgent) &&
                         typeof navigator.canShare === "function" && (
@@ -47,7 +46,7 @@ export default function CaptureOverlay({ capturedImage, onClose }: CaptureOverla
                                 className="flex gap-2 w-fit px-5 py-3 bg-black/20 text-white rounded-full border border-white backdrop-blur-md"
                             >
                                 <Share />
-                                Share to show support 🎉
+                                Share to show support!
                             </button>
                         )}
                 </div>

@@ -1,6 +1,6 @@
 import { RoundedBox, Center } from '@react-three/drei'
 import Text from './text'
-import type { TMeal } from '../config/template'
+import type { TMeal } from '../../config/template'
 
 interface NutritionPanelProps {
     meals: TMeal[]

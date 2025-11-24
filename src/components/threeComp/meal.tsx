@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Text3D, useGLTF } from '@react-three/drei'
 import { Mesh } from 'three'
 import { useBox, type BoxProps } from '@react-three/cannon'
-import { MEAL_CONFIG } from '../config/meals'
+import { MEAL_CONFIG } from '../../config/meals'
 
 interface MealProps extends BoxProps {
     originalName: string

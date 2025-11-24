@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
-import ObjectCanvas from "./components/canvas"
+import ObjectCanvas from "./components/threeComp/canvas"
 import { mealTemplates, type TMeal, foodKeywordMapping } from "./config/template"
-import Capture from "./components/capture"
-import { RefreshCcw, ChevronDown } from "lucide-react"
-import CaptureOverlay from "./components/captureOverlay"
+import { ChevronDown, Salad } from "lucide-react"
+import CaptureOverlay from "./components/ui/captureOverlay"
+import Header from "./components/ui/header"
+import PopupOverlay from "./components/ui/popupOverlay"
+
 function App() {
   const API_BASE = import.meta.env.VITE_API_BASE || 'https://stuffedplate.pages.dev'
 
   const [captureState, setCaptureState] = useState<0 | 1 | 2>(0)
   const [capturedImage, setCapturedImage] = useState<string>("")
+  const [openPopup, setOpenPopup] = useState<"nutrition" | "recipe" | "info" | null>(null)
 
   const [selectedMeals, setSelectedMeals] = useState<TMeal[]>([])
   const [showNo3DText, setShowNo3DText] = useState(false)
@@ -48,44 +51,38 @@ function App() {
         console.log('Fetch response:', res)
         const data = await res.json()
 
-        const parsedResults: TMeal[] = data.foods.food.map((item: any) => {
-          const { food_name, food_description } = item
+        const parsedResults: TMeal[] = data.foods.food
+          .filter((item: any) => item.food_type === "Generic")
+          .map((item: any) => {
+            const { food_id, food_name, food_description } = item
 
+            const amountMatch = food_description.match(/Per\s*([^\-\n\r]+)/i)
+            const caloriesMatch = food_description.match(/Calories:\s*([\d\.]+)/i)
+            const fatMatch = food_description.match(/Fat:\s*([\d\.]+)/i)
+            const carbsMatch = food_description.match(/Carbs:\s*([\d\.]+)/i)
+            const proteinMatch = food_description.match(/Protein:\s*([\d\.]+)/i)
 
-          const amountMatch = food_description.match(/Per\s*([^\-\n\r]+)/i)
-          const caloriesMatch = food_description.match(/Calories:\s*([\d\.]+)/i)
-          const fatMatch = food_description.match(/Fat:\s*([\d\.]+)/i)
-          const carbsMatch = food_description.match(/Carbs:\s*([\d\.]+)/i)
-          const proteinMatch = food_description.match(/Protein:\s*([\d\.]+)/i)
-
-          console.log("name: ", food_name)
-          console.log("description: ", food_description)
-          console.log("amountMatch: ", amountMatch[1])
-          console.log("caloriesMatch: ", caloriesMatch[1])
-          console.log("fatMatch: ", fatMatch[1])
-          console.log("carbsMatch: ", carbsMatch[1])
-          console.log("proteinMatch: ", proteinMatch[1])
-
-          let objName: string | null = null
-          const lowerFoodName = food_name.toLowerCase()
-          for (const keyword in foodKeywordMapping) {
-            if (lowerFoodName.includes(keyword.toLowerCase())) {
-              objName = foodKeywordMapping[keyword]
-              break
+            let objName: string | null = null
+            const lowerFoodName = food_name.toLowerCase()
+            for (const keyword in foodKeywordMapping) {
+              if (lowerFoodName.includes(keyword.toLowerCase())) {
+                objName = foodKeywordMapping[keyword]
+                break
+              }
             }
-          }
 
-          return {
-            _id: crypto.randomUUID(),
-            title: food_name,
-            amount: amountMatch ? amountMatch[1].trim() : "",
-            calories: caloriesMatch ? parseFloat(caloriesMatch[1]) : 0,
-            fat: fatMatch ? parseFloat(fatMatch[1]) : 0,
-            carbohydrate: carbsMatch ? parseFloat(carbsMatch[1]) : 0,
-            protein: proteinMatch ? parseFloat(proteinMatch[1]) : 0,
-            objName: objName,
-          }
-        })
+            return {
+              _id: crypto.randomUUID(),
+              food_id: parseInt(food_id),
+              title: food_name,
+              amount: amountMatch ? amountMatch[1].trim() : "",
+              calories: caloriesMatch ? parseFloat(caloriesMatch[1]) : 0,
+              fat: fatMatch ? parseFloat(fatMatch[1]) : 0,
+              carbohydrate: carbsMatch ? parseFloat(carbsMatch[1]) : 0,
+              protein: proteinMatch ? parseFloat(proteinMatch[1]) : 0,
+              objName: objName,
+            }
+          })
         setSearchResults(parsedResults)
       } catch (error) {
         console.error(error)
@@ -102,48 +99,34 @@ function App() {
   return (
     <div className=' h-screen w-full relative bg-[linear-gradient(135deg,#FEAD8B,#EA523E)] text-white'>
 
-
       <ObjectCanvas meals={selectedMeals} />
 
-      <div className="absolute inset-0 z-50 pointer-events-none text-center bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]" />
+      <div className="absolute h-screen flex flex-col justify-center items-end inset-0 z-50 pointer-events-none text-center bg-linear-to-b from-white/0 via-[#FEAD8B]/10 via-60% to-[#FEAD8B]" />
 
-      <div className="header absolute top-8 w-full z-10 h-[25vh] px-5 flex justify-between ">
+      {captureState === 0 && <div className="absolute h-fit w-fit z-80 inset-y-[35vh] right-0 items-end flex flex-col justify-center ">
+        {/* <button
+          onClick={() => { setOpenPopup("recipe") }}
+          className="vertical-writing px-4 py-2 bg-white/20 backdrop-blur-md text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
+        >
+          <BookOpenText size={20} className="-rotate-90" /> Recipes
+        </button> */}
 
-        <div className="w-1/3">
+        <button
+          onClick={() => { setOpenPopup("nutrition") }}
+          className="vertical-writing px-4 py-2 bg-white/0 backdrop-blur-md text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
+        >
+          <Salad size={20} className="-rotate-90" /> Nutritional Details
+        </button>
+      </div>}
 
-          <a href="https://naufalfathur.is-a.dev" target="_blank" rel="noopener noreferrer">
-            <img
-              id="nflogo"
-              src="/nflogo.png"
-              alt="Naufal Fathur Logo"
-              className="w-15 h-15 object-contain"
-            />
-          </a>
-
-        </div>
-
-        <div className="flex flex-col w-1/3 items-center text-center justify-start">
-          <img src="/logo-wtxt.png" alt="Stuffed Plate Logo" className="w-full max-w-60 h-auto object-contain mx-auto" />
-
-          {selectedMeals.length > 0 && captureState === 0 && (
-            <button
-              onClick={() => {
-                (window as any).dataLayer.push({ event: 'reset' });
-                setSelectedMeals([]);
-              }}
-              className="mt-4 text-xs px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-white flex items-center gap-2 border border-white/30 hover:bg-white/30 transition cursor-pointer"
-            >
-              Reset <RefreshCcw size={10} />
-            </button>
-          )}
-
-        </div>
-
-        <div className="w-1/3 justify-end flex">
-          {captureState === 0 && <Capture setCapturetingState={setCapturetingState} onCapture={(img: string) => setCapturedImage(img)} selectedMealLength={selectedMeals.length} />}
-        </div>
-
-      </div>
+      <Header
+        selectedMeals={selectedMeals}
+        captureState={captureState}
+        setSelectedMeals={setSelectedMeals}
+        setCapturetingState={setCaptureState}
+        setCapturedImage={setCapturedImage}
+        setOpenPopup={setOpenPopup}
+      />
 
       {showNo3DText && (
         <div className="absolute top-80 z-10 w-full text-center">
@@ -158,6 +141,7 @@ function App() {
 
 
       <div className="absolute flex flex-col justify-start bottom-5 left-0 right-0 z-90 font-light w-full text-center px-2 max-h-[40vh] overflow-y-auto">
+
         <p className="text-lg mb-3">In my plate I have:</p>
 
         <div className="flex flex-wrap justify-center gap-2 mb-4 text-xs">
@@ -223,7 +207,7 @@ function App() {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 justify-center text-xs">
+            <div className="flex flex-wrap gap-3 justify-center text-[10px]">
               {mealTemplates.map(({ meal }: any) => (
                 <button
                   key={meal.objName}
@@ -238,6 +222,17 @@ function App() {
           </div>
         )}
 
+        <div className="w-full flex justify-center mt-2 cursor-pointer">
+          <a href="https://naufalfathur.is-a.dev" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+            <img
+              id="nflogo"
+              src="/nflogo.png"
+              alt="Naufal Fathur Logo"
+              className="w-8 h-8 object-contain"
+            />
+          </a>
+        </div>
+
       </div>
 
       {captureState === 2 && (
@@ -247,8 +242,12 @@ function App() {
         />
       )}
 
-
-
+      {openPopup && (
+        <PopupOverlay
+          setOpenPopup={setOpenPopup}
+          selectedMeals={selectedMeals}
+          openPopup={openPopup} />
+      )}
 
     </div >
   )

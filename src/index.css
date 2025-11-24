@@ -45,3 +45,8 @@
   font-variation-settings:
     "HEXP" 0;
 }
+
+.vertical-writing {
+  writing-mode: sideways-lr;
+  text-orientation: mixed;
+}

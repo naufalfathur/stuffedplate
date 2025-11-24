@@ -1,6 +1,7 @@
 // Define the type for a single meal
 export type TMeal = {
     _id: string
+    food_id: number
     title: string
     objName: string
     amount: string
@@ -20,6 +21,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 4501,
             title: "White Rice",
             amount: "160g",
             objName: "rice",
@@ -32,10 +34,11 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 1677,
             title: "Chicken Drumstick",
-            amount: "216g",
+            amount: "101g",
             objName: "chicken",
-            calories: 165,
+            calories: 216,
             carbohydrate: 0,
             protein: 27,
             fat: 11,
@@ -44,6 +47,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 1358,
             title: "Beef Steak",
             amount: "101g",
             objName: "beef",
@@ -56,6 +60,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 2057,
             title: "Salmon",
             amount: "100g",
             objName: "salmon",
@@ -68,18 +73,20 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 5762,
             title: "French Fries",
-            amount: "18Pcs",
+            amount: "100g",
             objName: "potato",
-            calories: 110,
-            carbohydrate: 20,
-            protein: 2,
-            fat: 2,
+            calories: 274,
+            carbohydrate: 35,
+            protein: 3.5,
+            fat: 14,
         },
     },
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 3096,
             title: "Fried Egg",
             amount: "53g",
             objName: "egg",
@@ -92,6 +99,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 36308,
             title: "Cabbage",
             amount: "100g",
             objName: "vegetable",
@@ -104,6 +112,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 6254,
             title: "Mixed Salad",
             amount: "100g",
             objName: "salad",
@@ -116,6 +125,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 46072664,
             title: "White Bread",
             amount: "1 slice",
             objName: "bread",
@@ -128,6 +138,7 @@ export const mealTemplates: TMealTemplate[] = [
     {
         meal: {
             _id: crypto.randomUUID(),
+            food_id: 4409,
             title: "Noodles",
             amount: "101g",
             objName: "noodles",

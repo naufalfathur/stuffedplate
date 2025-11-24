@@ -6,10 +6,10 @@ import Plane from './plane'
 import { Debug } from '@react-three/cannon'
 import Meal from './meal'
 import NutritionPanel from './nutritionPanel'
-import { mealTemplates, type TMeal } from '../config/template'
-import CameraController from './cameraController'
+import { mealTemplates, type TMeal } from '../../config/template'
+import CameraController from '.././cameraController'
 import { Suspense } from 'react'
-import Loader from './loader'
+import Loader from '../ui/loader'
 
 interface ObjectCanvasProps {
     debug?: boolean
@@ -83,7 +83,7 @@ function ObjectCanvas({ debug = import.meta.env.VITE_DEBUG === 'true', meals = [
 
                 <OrbitControls
                     makeDefault
-                    target={[0, 7, 0]}
+                    target={[0, 6, 0]}
                     autoRotate
                     autoRotateSpeed={0.05}
                     minPolarAngle={0}
