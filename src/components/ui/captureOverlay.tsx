@@ -1,4 +1,4 @@
-import { Download, Share } from "lucide-react";
+import { Download, Share, X } from "lucide-react";
 
 interface CaptureOverlayProps {
     capturedImage: string;
@@ -8,7 +8,7 @@ interface CaptureOverlayProps {
 export default function CaptureOverlay({ capturedImage, onClose }: CaptureOverlayProps) {
     console.log("Captured Image:", capturedImage);
     return (
-        <div className="absolute inset-0 z-999 bg-white/30 backdrop-blur-lg flex flex-col items-center justify-center p-6">
+        <div className="absolute inset-0 z-999 bg-linear-to-b from-bg-white/30 to-black/30 backdrop-blur-lg flex flex-col items-center justify-center p-6">
             <div className="flex flex-col items-center gap-6">
                 <img
                     src={capturedImage}
@@ -54,9 +54,9 @@ export default function CaptureOverlay({ capturedImage, onClose }: CaptureOverla
 
             <button
                 onClick={onClose}
-                className="mt-8 text-sm text-white/70 underline"
+                className="cursor-pointer flex gap-2 items-center mt-8 text-sm text-white/70 font-bold"
             >
-                Close
+                <X size={15} /> Close
             </button>
         </div>
     )

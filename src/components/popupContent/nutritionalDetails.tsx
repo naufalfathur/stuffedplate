@@ -37,9 +37,11 @@ interface MealNutritionMap {
 export const NutritionalDetails = ({ meals }: NutritionalDetailsProps) => {
     const API_BASE = import.meta.env.VITE_API_BASE || 'https://stuffedplate.pages.dev'
     const [mealNutrition, setMealNutrition] = useState<MealNutritionMap>({});
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchNutrition = async () => {
+            setLoading(true);
             const results: MealNutritionMap = {};
 
             for (const meal of meals) {
@@ -81,15 +83,13 @@ export const NutritionalDetails = ({ meals }: NutritionalDetailsProps) => {
             }
 
             setMealNutrition(results);
+            setLoading(false);
         };
 
         if (meals.length > 0) fetchNutrition();
     }, [meals]);
 
     const totalCalories = meals.reduce((sum, meal) => sum + (meal.calories || 0), 0)
-    const totalFat = meals.reduce((sum, meal) => sum + (meal.fat || 0), 0)
-    const totalProtein = meals.reduce((sum, meal) => sum + (meal.protein || 0), 0)
-    const totalCarbs = meals.reduce((sum, meal) => sum + (meal.carbohydrate || 0), 0)
 
     const aggregated = meals.reduce((acc, meal) => {
         const nd = mealNutrition[meal.food_id];
@@ -127,91 +127,72 @@ export const NutritionalDetails = ({ meals }: NutritionalDetailsProps) => {
                 <Salad size={70} className="" />
                 <div className="flex w-full justify-between">
                     <h1 className='font-bold text-3xl'>Nutritional<br />Details</h1>
-                    <div className="w-fit  flex flex-col justify-between">
-                        <div className="flex gap-8">
-                            <div className="flex flex-col  text-center w-1/2">
-                                <p className='text-xs'>{formatNumber(totalCalories)}</p>
-                                <p className='text-xs text-white/80'>Calories</p>
-                            </div>
-                            <div className="flex flex-col text-center w-1/2">
-                                <p className='text-xs'>{formatNumber(totalCarbs)}</p>
-                                <p className='text-xs text-white/80'>Carbs</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-8 ">
-                            <div className="flex flex-col  text-center w-1/2">
-                                <p className='text-xs'>{formatNumber(totalProtein)}</p>
-                                <p className='text-xs text-white/80'>Protein</p>
-                            </div>
-                            <div className="flex flex-col  text-center w-1/2">
-                                <p className='text-xs'>{formatNumber(totalFat)}</p>
-                                <p className='text-xs text-white/80'>Fat</p>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
 
 
-            <div className="w-full h-full text-white border-t-4 border-b-4 mt-4 py-2 flex flex-col overflow-x-scroll">
-
-                <div className='flex flex-col mb-2 gap-1 pb-2 border-b-2'>
-                    <h2 className="text-lg border-b flex gap-1 justify-between items-center font0">
-                        Total Meals <span className='text-sm italic'>(Scroll for individual item)</span>
-                    </h2>
-
-                    <div className="primary flex border-b font-bold justify-between">
-                        <p className="text-sm">Calories</p>
-                        <p className="text-sm">{totalCalories}</p>
+            <div className="body w-full h-full text-white border-t-4 border-b-4 mt-4 py-2 flex flex-col overflow-x-scroll">
+                {loading ? (
+                    <div className="flex w-full h-full justify-center items-center">
+                        <div className="w-10 h-10 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                     </div>
+                ) : (
+                    <>
+                        <div className='flex flex-col mb-2 gap-1 pb-2 border-b-2'>
+                            <h2 className="text-lg border-b flex gap-1 justify-between items-center font0">
+                                Total Meals <span className='text-sm italic'>(Scroll for individual item)</span>
+                            </h2>
 
-                    {/* <div className="primary flex border-b font-bold justify-end">
-                        <p className="text-sm">% Daily Values*</p>
-                    </div> */}
-
-                    {nutritionalFacts.map(n => {
-                        const key = n.type.toLowerCase().replace(/\s+/g, "_");
-                        return (
-                            <div className={`${n.child && 'ml-4'} flex border-b ${n.primary ? 'font-bold' : 'font-light'} justify-between`}>
-                                <p className="text-sm">{n.type}</p>
-                                <p className="text-sm"> {aggregated[key] !== undefined ? formatNumber(Number(aggregated[key])) : "--"}{n.unit}</p>
+                            <div className="primary flex border-b font-bold justify-between">
+                                <p className="text-sm">Calories</p>
+                                <p className="text-sm">{totalCalories}</p>
                             </div>
-                        )
-                    })}
-                </div>
 
-                {meals.map((m, i) => (
-                    <div className='flex flex-col mb-2 gap-1 pb-2 border-b-2'>
-                        <h2 className="text-lg border-b flex gap-1">
-                            <span className='text-xs'>{i + 1}</span>
-                            {m.title}
-                        </h2>
+                            {/* <div className="primary flex border-b font-bold justify-end">
+                                <p className="text-sm">% Daily Values*</p>
+                            </div> */}
 
-                        <div className="primary flex border-b font-bold justify-between">
-                            <p className="text-sm">Calories</p>
-                            <p className="text-sm">{m.calories}</p>
+                            {nutritionalFacts.map(n => {
+                                const key = n.type.toLowerCase().replace(/\s+/g, "_");
+                                return (
+                                    <div className={`${n.child && 'ml-4'} flex border-b ${n.primary ? 'font-bold' : 'font-light'} justify-between`}>
+                                        <p className="text-sm">{n.type}</p>
+                                        <p className="text-sm"> {aggregated[key] !== undefined ? formatNumber(Number(aggregated[key])) : "--"}{n.unit}</p>
+                                    </div>
+                                )
+                            })}
                         </div>
 
-                        {/* <div className="primary flex border-b font-bold justify-end">
-                            <p className="text-sm">% Daily Values*</p>
-                        </div> */}
-                        {nutritionalFacts.map(n => (
-                            <div className={`${n.child && 'ml-4'} flex border-b ${n.primary ? 'font-bold' : 'font-light'} justify-between`}>
-                                <p className="text-sm">
-                                    {n.type}
-                                </p>
-                                <p className="text-sm">
-                                    {mealNutrition[m.food_id]?.[n.type.toLowerCase().replace(/\s+/g, "_")] !== undefined ? formatNumber(Number(mealNutrition[m.food_id]?.[n.type.toLowerCase().replace(/\s+/g, "_")])) : "--"}
-                                    {n.unit}
-                                </p>
+                        {meals.map((m, i) => (
+                            <div className='flex flex-col mb-2 gap-1 pb-2 border-b-2'>
+                                <h2 className="text-lg border-b flex gap-1">
+                                    <span className='text-xs'>{i + 1}</span>
+                                    {m.title}
+                                </h2>
+
+                                <div className="primary flex border-b font-bold justify-between">
+                                    <p className="text-sm">Calories</p>
+                                    <p className="text-sm">{m.calories}</p>
+                                </div>
+
+                                {/* <div className="primary flex border-b font-bold justify-end">
+                                    <p className="text-sm">% Daily Values*</p>
+                                </div> */}
+                                {nutritionalFacts.map(n => (
+                                    <div className={`${n.child && 'ml-4'} flex border-b ${n.primary ? 'font-bold' : 'font-light'} justify-between`}>
+                                        <p className="text-sm">
+                                            {n.type}
+                                        </p>
+                                        <p className="text-sm">
+                                            {mealNutrition[m.food_id]?.[n.type.toLowerCase().replace(/\s+/g, "_")] !== undefined ? formatNumber(Number(mealNutrition[m.food_id]?.[n.type.toLowerCase().replace(/\s+/g, "_")])) : "--"}
+                                            {n.unit}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
                         ))}
-                    </div>
-                ))}
-
-
-
+                    </>
+                )}
             </div>
 
             <p className="text-xs mt-2">* The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.</p>

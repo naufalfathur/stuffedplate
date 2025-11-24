@@ -30,6 +30,14 @@ function PopupOverlay({ openPopup, setOpenPopup, selectedMeals }: PopupOverlayPr
                 }
 
             </div>
+            <button
+                onClick={() => {
+                    setOpenPopup(null)
+                }}
+                className='cursor-pointer'
+            >
+                <h1 className='font-bold text-sm mt-2 flex items-center gap-2'>Close</h1>
+            </button>
         </div>
     )
 }
