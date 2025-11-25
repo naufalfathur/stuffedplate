@@ -63,4 +63,18 @@ export const MEAL_CONFIG = {
         args: [3.5, 0.4, 3.5],
         category: 'carbs',
     },
+    bacon: {
+        scale: 0.4,
+        mass: 3,
+        args: [1, 0.1, 3.5],
+        category: 'carbs',
+    },
+    sausage: {
+        scale: 0.3,
+        mass: 3,
+        args: [0.5, 0.5, 2],
+        offset: [0, -0.4, 0],
+        rotation: [0, 0.8, 0],
+        category: 'carbs',
+    }
 }

@@ -42,6 +42,14 @@ function App() {
     setSelectedMeals(prev => prev.filter(meal => meal._id !== id))
   }
 
+  function resolveFoodKeyword(input: string) {
+    const lower = input.toLowerCase()
+    const match = Object.keys(foodKeywordMapping)
+      .sort((a, b) => b.length - a.length)
+      .find(key => lower.includes(key.toLowerCase()))
+    return match ? foodKeywordMapping[match] : null
+  }
+
   async function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter" && searchTerm.trim() !== "") {
       setSearchResults([])
@@ -62,14 +70,7 @@ function App() {
             const carbsMatch = food_description.match(/Carbs:\s*([\d\.]+)/i)
             const proteinMatch = food_description.match(/Protein:\s*([\d\.]+)/i)
 
-            let objName: string | null = null
-            const lowerFoodName = food_name.toLowerCase()
-            for (const keyword in foodKeywordMapping) {
-              if (lowerFoodName.includes(keyword.toLowerCase())) {
-                objName = foodKeywordMapping[keyword]
-                break
-              }
-            }
+            const objName = resolveFoodKeyword(food_name)
 
             return {
               _id: crypto.randomUUID(),
